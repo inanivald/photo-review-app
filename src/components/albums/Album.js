@@ -84,6 +84,7 @@ const Album = () => {
 
 	return (
 		<>	
+        <div className="text-center">
 			{loading
 				? (<ClipLoader/>)
 				: album && 
@@ -99,9 +100,9 @@ const Album = () => {
 								</span>
 								</h2>
 
-					<div className="d-flex justify-content-between mb-3">
+					<div className="text-center mt-3 mb-3">
 						<div>
-							<Button className="btn btn-standard" size="lg" onClick={() => {handleCreateReviewLink(albumId)}}>Create review link</Button>
+							<Button className="btn btn-standard" onClick={() => {handleCreateReviewLink(albumId)}}>Create review link</Button>
 						</div>
 					</div>
 
@@ -118,8 +119,7 @@ const Album = () => {
                         <div className="text-center mt-3">
                             <p className="selected-photos">Selected photos: {selectedImages.length}</p>
                             <div className="d-flex justify-content-center">
-								<Button 
-								variant="dark"
+								<Button
                                     disabled={btnDisabled} 
                                     className="btn btn-standard" 
                                     onClick={handleCreateNewAlbum}>
@@ -142,6 +142,7 @@ const Album = () => {
 							}
 						</>
 				}
+            </div>
 		</>
 	)
 }

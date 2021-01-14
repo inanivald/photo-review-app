@@ -87,7 +87,7 @@ const UpdateProfile = () => {
 									<Form.Control type="password" ref={passwordConfirmRef} />
 								</Form.Group>
 
-								<Button disabled={loading} type="submit">Update</Button>
+								<Button className="btn btn-standard" disabled={loading} type="submit">Update</Button>
 
 							</Form>
 						</Card.Body>

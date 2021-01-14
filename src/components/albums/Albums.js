@@ -11,7 +11,7 @@ const Albums = () => {
 
 	return (
 		<>
-			<h2 className="mb-3">All Albums</h2>
+			<h2 className="mb-3 text-center">All Albums</h2>
 
 			{
 				loading
@@ -20,7 +20,7 @@ const Albums = () => {
 			}
 
 			{currentUser && (
-				<div className="mt-3">
+				<div className="mt-3 text-center">
 					<Link to="/albums/create" className="btn btn-standard">Create a new Album</Link>
 				</div>
 			)}

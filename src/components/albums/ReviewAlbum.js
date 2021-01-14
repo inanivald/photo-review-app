@@ -159,9 +159,8 @@ const ReviewAlbum = () => {
                         <p>Liked Images: {likedImages.length} / {images.length}</p>
                         <div className="d-flex justify-content-left">
                             <Button 
-                                disabled={disabledBtn} 
-                                variant="primary" 
-                                className="mr-3" 
+                                disabled={disabledBtn}
+                                className="btn btn-standard mr-3" 
                                 onClick={handleSendReview}>
                                     Send Review
                             </Button>

@@ -35,7 +35,7 @@ const Login = () => {
 			<Col md={{ span: 6, offset: 3 }}>
 				<Card>
 					<Card.Body>
-						<Card.Title>Log in</Card.Title>
+						<Card.Title>Please enter your log in details below.</Card.Title>
 
 						{error && (<Alert variant="danger">{error}</Alert>)}
 
@@ -51,15 +51,16 @@ const Login = () => {
 								<Form.Control type="password" ref={passwordRef} required />
 							</Form.Group>
 
-							<Button disabled={loading} type="submit">Log in</Button>
+							<Button className="btn btn-standard" disabled={loading} type="submit">Log in</Button>
 
 						</Form>
 					</Card.Body>
-				</Card>
-				<div className="text-center mt-2">
+					<div className="text-center mt-2">
 					<p><Link to="/signup">Sign Up?</Link></p>
 					<p><Link to="/reset">Forgot password?</Link></p>
 				</div>
+				</Card>
+				
 			</Col>
 		</Row>
 	</>

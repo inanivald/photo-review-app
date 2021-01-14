@@ -20,11 +20,11 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Lato', sans-serif;
+    font-family: 'Archivo Black', sans-serif;
 }
 
 p {
-    font-family: 'Merriweather', sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 a {
@@ -59,7 +59,7 @@ a:hover {
         color: $color-main-pink;
     }
     .navbar-brand:visited {
-        color: $color-light-green
+        color: $color-light-green;
     }
     .navbar-nav .nav-link {
         color: #fff;
@@ -68,10 +68,14 @@ a:hover {
         color: $color-main-pink;
     }
     .navbar-nav a.nav-link.active {
-        color: #878A86
+        color: #878A86;
     }
     .navbar-toggler {
         border: none;
+        color: #fff;
+    }
+    .navbar-toggler:active {
+        color: $color-main-pink;
     }
 }
 
