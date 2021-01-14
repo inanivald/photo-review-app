@@ -26,6 +26,9 @@
     "simple-react-lightbox": "^3.5.2",
     "web-vitals": "^0.2.4"
   },
+  "engines": {
+    "node": "12.x"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
