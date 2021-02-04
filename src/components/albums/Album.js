@@ -11,7 +11,6 @@ import { ClipLoader } from 'react-spinners'
 import { useAuth } from '../../contexts/AuthContext'
 import { db } from '../../firebase'
 
-
 const Album = () => {
 	const [reviewLink, setReviewLink] = useState(null)
 	const { albumId } = useParams()
@@ -21,7 +20,7 @@ const Album = () => {
 	const [selectedImages, setSelectedImages] = useState([]);
 	const [error, setError] = useState(false);
 	const [btnDisabled, setBtnDisabled] = useState(false);
-	const navigate = useNavigate();
+    const navigate = useNavigate();
 
 	const handleEditTitle = () => {
         setEditTitle(true);
@@ -31,11 +30,22 @@ const Album = () => {
         let urlOrigin = window.location.origin
         let url = `${urlOrigin}/review/${album}`;
         setReviewLink(url);
-	}
+    }
+    
+    const updateSelectedImages = (e) => {
+        const [image] = images.filter(image => (image.id === e.target.id));
+
+        if(e.target.checked === true) {
+            setSelectedImages(images => [...images, image]);
+        } else {
+            const updatedImageArray = selectedImages.filter(image => (image.id !== e.target.id))
+            setSelectedImages(updatedImageArray);
+        }
+    };
 
 	const handleCreateNewAlbum = async () => {
         const title = prompt('New album title:');
-
+        
         if (title.length < 4) {
             setError('Title must be at least 3 chars.')
             return; 
@@ -50,10 +60,18 @@ const Album = () => {
                 owner: currentUser.uid
             });
 
-            await selectedImages.forEach(image => {
-                db.collection('images').doc(image).update({
-                    album: db.collection('albums').doc(docRef.id)
-                })
+            await selectedImages.forEach(selectedImage => {
+                const image = {
+                    name: selectedImage.name,
+                    path: selectedImage.path,
+                    owner: currentUser.uid,
+                    url: selectedImage.url,
+                    size: selectedImage.size
+                }
+                if (albumId) {
+                    image.album = db.collection('albums').doc(docRef.id)
+                }
+                db.collection('images').add(image);
             });
             navigate(`/albums`);
         } catch (err) {
@@ -62,26 +80,6 @@ const Album = () => {
         };
     };
 	
-	
-	const updateSelectedImages = (e) => {
-        let imageArray = [];
-
-        if (e.target.checked === true) {
-            if (selectedImages.includes(e.target.id)) {
-                return;
-            };
-            imageArray.push(e.target.id);
-            setSelectedImages(selectedImages.concat(imageArray));
-        };
-
-        if (e.target.checked === false) {
-            let filteredArray = selectedImages.filter(image => {
-                return image !== e.target.id
-            });
-            setSelectedImages(filteredArray)
-        };
-    };
-
 	return (
 		<>	
         <div className="text-center">
