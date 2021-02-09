@@ -64,9 +64,10 @@ const Album = () => {
                 const image = {
                     name: selectedImage.name,
                     path: selectedImage.path,
+                    size: selectedImage.size,
+                    type: selectedImage.type,
                     owner: currentUser.uid,
                     url: selectedImage.url,
-                    size: selectedImage.size
                 }
                 if (albumId) {
                     image.album = db.collection('albums').doc(docRef.id)

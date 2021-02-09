@@ -11,6 +11,7 @@ import moment from 'moment'
 
 const ReviewAlbum = () => {
     const [likedImages, setLikedImages] = useState([]);
+    const [dislikedImages, setDislikedImages] = useState([]);
     const [reviewedImages, setReviewedImages] = useState([]);
     const [disabledBtn, setDisabledBtn] = useState(true);
     const { albumId } = useParams();
@@ -34,10 +35,6 @@ const ReviewAlbum = () => {
     }, [images]);
 
     useEffect(() => {
-        let likedArray = reviewedImages.filter(image => {
-            return image.like === true
-        });
-        setLikedImages(likedArray);
 
         let result = reviewedImages.every(image => image.like !== undefined);
         if (result === false) {
@@ -66,8 +63,32 @@ const ReviewAlbum = () => {
         })
         setReviewedImages(updatedArray);
         toggleThumbs(image.id, reaction);
+    
+		if (likedImages.includes(image)) {
+			return;
+		}
+		setLikedImages((prev) => [...prev, image]);
+
+		if (dislikedImages.includes(image)) {
+			setDislikedImages(
+				dislikedImages.filter((img) => img.id !== image.id)
+			);
+        }
+       
     }
 
+    const handleDislikeImage = (image, reaction) => {
+		if (dislikedImages.includes(image)) {
+			return;
+		}
+		setDislikedImages((prev) => [...prev, image]);
+
+		if (likedImages.includes(image)) {
+			setLikedImages(likedImages.filter((img) => img.id !== image.id));
+        }
+        toggleThumbs(image.id, reaction);
+    };
+    
     const handleSendReview = async () => {
         const title = `${album.title} - ${moment().format("MMMM Do YYYY, h:mm:ss a")}`;
 
@@ -77,7 +98,6 @@ const ReviewAlbum = () => {
            const docRef = await db.collection('albums').add({
                 title,
                 owner: album.owner,
-                reviewedAlbum: true
             });
             
             await likedImages.forEach(likedImage => {
@@ -138,7 +158,7 @@ const ReviewAlbum = () => {
                                             <button 
                                                 style={{ border: "none", backgroundColor: "transparent" }} 
                                                 className="cross"
-                                                onClick={() => updateImage(image, false)} >
+                                                onClick={() => handleDislikeImage(image, false)} >
                                                     <FontAwesomeIcon 
                                                         icon={faTimes} 
                                                         style={{ fontSize: "1.5em", margin: "0 0.5em"}} 
@@ -157,10 +177,12 @@ const ReviewAlbum = () => {
                 reviewedImages && likedImages.length > 0 && (
                     <div className="text-left mt-3">
                         <p>Liked Images: {likedImages.length} / {images.length}</p>
+                        
                         <div className="d-flex justify-content-left">
                             <Button 
-                                disabled={disabledBtn}
-                                className="btn btn-standard mr-3" 
+                                disabled={disabledBtn} 
+                                variant="primary" 
+                                className="mr-3" 
                                 onClick={handleSendReview}>
                                     Send Review
                             </Button>

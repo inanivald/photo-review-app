@@ -34,7 +34,9 @@ const UploadAlbumImage = ({ albumId }) => {
 			return;
 		}
 
-		setUploadImage(acceptedFiles[0]);
+		acceptedFiles.forEach((file) => {
+			setUploadImage(file);
+		});
 	}, []);
 
 	const { getRootProps, getInputProps, isDragActive, acceptedFiles, isDragAccept, isDragReject } = useDropzone({
