@@ -9,12 +9,22 @@ const useDeleteImage = (image) => {
 
 		(async () => {
 			
-			if (image.path !== `images/guest/${image.name}`)
-				{ await db.collection('images').doc(image.id).delete();
-					await storage.ref(image.path).delete();}
-			else { await db.collection('images').doc(image.id).delete();
-
+			db.collection('images').doc(image.id).delete()
+		db.collection('images')
+		.where('path', '==', image.path)
+		.where('owner', '==', image.owner)
+		.get().then(docs => {
+			const imgs = []
+			docs.forEach(doc => {
+				imgs.push({
+					id: doc.id,
+					...doc.data()
+				})
+			})
+			if (imgs.length === 0) {
+				storage.ref(image.path).delete()
 			}
+		})
 			
 		})();
 	}, [image]);

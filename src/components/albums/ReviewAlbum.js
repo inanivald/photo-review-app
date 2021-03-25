@@ -37,6 +37,7 @@ const ReviewAlbum = () => {
     useEffect(() => {
 
         let result = reviewedImages.every(image => image.like !== undefined);
+        console.log(result, reviewedImages)
         if (result === false) {
             setDisabledBtn(true);
             return;
@@ -80,8 +81,18 @@ const ReviewAlbum = () => {
     const handleDislikeImage = (image, reaction) => {
 		if (dislikedImages.includes(image)) {
 			return;
-		}
-		setDislikedImages((prev) => [...prev, image]);
+        }
+        let updatedArray = reviewedImages.map(item => {
+            if (item.id === image.id) {
+                return {
+                    like: reaction,
+                }
+            } else {
+                return item;
+            }
+        })
+        setReviewedImages(updatedArray);
+        setDislikedImages((prev) => [...prev, image]);
 
 		if (likedImages.includes(image)) {
 			setLikedImages(likedImages.filter((img) => img.id !== image.id));

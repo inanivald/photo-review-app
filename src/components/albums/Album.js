@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPen } from '@fortawesome/free-solid-svg-icons'
 import { ClipLoader } from 'react-spinners'
 import { useAuth } from '../../contexts/AuthContext'
-import { db } from '../../firebase'
+import { db, storage } from '../../firebase'
 
 const Album = () => {
 	const [reviewLink, setReviewLink] = useState(null)
@@ -63,7 +63,7 @@ const Album = () => {
             await selectedImages.forEach(selectedImage => {
                 const image = {
                     name: selectedImage.name,
-                    path: selectedImage.path,
+                    path: selectedImage.name,
                     size: selectedImage.size,
                     type: selectedImage.type,
                     owner: currentUser.uid,
@@ -71,8 +71,10 @@ const Album = () => {
                 }
                 if (albumId) {
                     image.album = db.collection('albums').doc(docRef.id)
+                    console.log(image)
                 }
                 db.collection('images').add(image);
+                storage.ref(`images/selected/${image.name}`).put(image);
             });
             navigate(`/albums`);
         } catch (err) {
