@@ -10,21 +10,21 @@ const useDeleteImage = (image) => {
 		(async () => {
 			
 			db.collection('images').doc(image.id).delete()
-		db.collection('images')
-		.where('path', '==', image.path)
-		.where('owner', '==', image.owner)
-		.get().then(docs => {
-			const imgs = []
-			docs.forEach(doc => {
-				imgs.push({
-					id: doc.id,
-					...doc.data()
+			db.collection('images')
+			.where('path', '==', image.path)
+			.where('owner', '==', image.owner)
+			.get().then(docs => {
+				const imgs = []
+				docs.forEach(doc => {
+					imgs.push({
+						id: doc.id,
+						...doc.data()
+					})
 				})
+				if (imgs.length === 0) {
+					storage.ref(image.path).delete()
+				}
 			})
-			if (imgs.length === 0) {
-				storage.ref(image.path).delete()
-			}
-		})
 			
 		})();
 	}, [image]);

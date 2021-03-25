@@ -71,7 +71,6 @@ const Album = () => {
                 }
                 if (albumId) {
                     image.album = db.collection('albums').doc(docRef.id)
-                    console.log(image)
                 }
                 db.collection('images').add(image);
                 storage.ref(`images/selected/${image.name}`).put(image);
