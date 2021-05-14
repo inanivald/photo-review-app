@@ -19,9 +19,10 @@ const useDeleteImage = (image) => {
 					imgs.push({
 						id: doc.id,
 						...doc.data()
+						
 					})
 				})
-				if (imgs.length === 0) {
+				if (imgs.length === 1) {
 					storage.ref(image.path).delete()
 				}
 			})
@@ -33,3 +34,4 @@ const useDeleteImage = (image) => {
 }
 
 export default useDeleteImage
+

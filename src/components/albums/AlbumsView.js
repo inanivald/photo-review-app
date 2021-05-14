@@ -20,7 +20,7 @@ const AlbumsView = ({ albums }) => {
 		<Row>
 			{albums.map(album => (
 				<Col sm={6} md={4} lg={3} key={album.id}>
-					<Card className="mb-3">
+					<Card className="mb-3 h-100">
 						<Link to={`/albums/${album.id}`}>
 							<Card.Img variant="top" src={PhotoPlaceholder} title={album.title} />
 						</Link>
